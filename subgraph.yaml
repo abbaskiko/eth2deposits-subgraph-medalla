@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: Ethereum 2 deposit contract for the Medalla testnet
+repository: https://github.com/attestantio/eth2deposits-subgraph-medalla
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DepositContract
+    network: goerli
+    source:
+      address: '0x07b39F4fDE4A38bACe212b546dAc87C58DfE3fDC'
+      abi: DepositContract
+      startBlock: 3085928
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Gravatar
+      abis:
+        - name: DepositContract
+          file: ./abis/DepositContract.abi
+      eventHandlers:
+        - event: DepositEvent(bytes,bytes,bytes,bytes,bytes)
+          handler: handleDepositEvent
+      file: ./src/mapping.ts
